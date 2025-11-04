@@ -1,0 +1,617 @@
+// =====================================================
+// TECHSTORE - MODELO NoSQL (MongoDB)
+// Base de Datos: techstore_db
+// Colecciones: categorias, productos
+// =====================================================
+
+// =====================================================
+// COLECCIÓN: categorias
+// Descripción: Categorías de productos de tecnología
+// =====================================================
+
+db.categorias.insertMany([
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d5e"),
+    nombre: "Smartphones",
+    descripcion: "Teléfonos inteligentes de última generación",
+    slug: "smartphones",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 1,
+    imagen_url: "https://example.com/img/smartphones.jpg"
+  },
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d5f"),
+    nombre: "Laptops",
+    descripcion: "Computadoras portátiles para trabajo y entretenimiento",
+    slug: "laptops",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 2,
+    imagen_url: "https://example.com/img/laptops.jpg"
+  },
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d60"),
+    nombre: "Tablets",
+    descripcion: "Tablets para productividad y multimedia",
+    slug: "tablets",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 3,
+    imagen_url: "https://example.com/img/tablets.jpg"
+  },
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d61"),
+    nombre: "Auriculares",
+    descripcion: "Auriculares y audífonos con cancelación de ruido",
+    slug: "auriculares",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 4,
+    imagen_url: "https://example.com/img/auriculares.jpg"
+  },
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d62"),
+    nombre: "Smartwatches",
+    descripcion: "Relojes inteligentes y wearables",
+    slug: "smartwatches",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 5,
+    imagen_url: "https://example.com/img/smartwatches.jpg"
+  },
+  {
+    _id: ObjectId("673f5a1b2c4e8f1a2b3c4d63"),
+    nombre: "Accesorios",
+    descripcion: "Accesorios y complementos para dispositivos",
+    slug: "accesorios",
+    activo: true,
+    fecha_creacion: new Date("2024-01-15"),
+    orden: 6,
+    imagen_url: "https://example.com/img/accesorios.jpg"
+  }
+]);
+
+// =====================================================
+// COLECCIÓN: productos
+// Descripción: Catálogo de productos con atributos flexibles
+// Característica clave: Atributos anidados (especificaciones técnicas)
+// =====================================================
+
+db.productos.insertMany([
+  // ========== SMARTPHONES ==========
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d64"),
+    sku: "SM-IPHON-15PRO-256-BLK",
+    nombre: "iPhone 15 Pro",
+    descripcion: "Smartphone premium con chip A17 Pro y cámara avanzada",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d5e"),
+    categoria_nombre: "Smartphones", // Desnormalizado para queries rápidas
+    marca: "Apple",
+    modelo: "iPhone 15 Pro",
+    precio_base: 1299.99,
+    precio_venta: 1299.99,
+    stock: 45,
+    estado: "ACTIVO",
+    
+    // ATRIBUTOS FLEXIBLES ANIDADOS (clave para NoSQL)
+    especificaciones: {
+      pantalla: {
+        tamaño: "6.1 pulgadas",
+        tipo: "Super Retina XDR OLED",
+        resolucion: "2556 x 1179 px",
+        tasa_refresco: "120Hz ProMotion",
+        brillo_max: "2000 nits"
+      },
+      procesador: {
+        chip: "Apple A17 Pro",
+        nucleos: "6 núcleos",
+        arquitectura: "3nm"
+      },
+      memoria: {
+        ram: "8GB",
+        almacenamiento: "256GB",
+        tipo_almacenamiento: "NVMe"
+      },
+      camara: {
+        principal: "48MP",
+        ultra_angular: "12MP",
+        telefoto: "12MP (3x zoom óptico)",
+        frontal: "12MP TrueDepth",
+        caracteristicas: ["Night mode", "ProRAW", "ProRes video", "Cinematic mode"]
+      },
+      bateria: {
+        capacidad: "3274 mAh",
+        carga_rapida: "USB-C 20W",
+        carga_inalambrica: "MagSafe 15W",
+        autonomia: "Hasta 23 horas de video"
+      },
+      conectividad: {
+        red: "5G",
+        wifi: "WiFi 6E",
+        bluetooth: "5.3",
+        nfc: true,
+        usb: "USB-C"
+      },
+      dimensiones: {
+        alto: "146.6 mm",
+        ancho: "70.6 mm",
+        grosor: "8.25 mm",
+        peso: "187 g"
+      }
+    },
+    
+    colores_disponibles: ["Negro Titanio", "Blanco Titanio", "Azul Titanio", "Natural Titanio"],
+    color_actual: "Negro Titanio",
+    
+    imagenes: [
+      "https://example.com/products/iphone15pro-black-1.jpg",
+      "https://example.com/products/iphone15pro-black-2.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Apple Inc.",
+    fecha_ingreso: new Date("2024-10-15"),
+    tags: ["premium", "5g", "48mp", "titanio", "usb-c"],
+    puntuacion_promedio: 4.8,
+    numero_resenas: 234
+  },
+  
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d65"),
+    sku: "SM-SAM-S24-128-BLK",
+    nombre: "Samsung Galaxy S24",
+    descripcion: "Flagship Android con IA integrada y pantalla AMOLED",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d5e"),
+    categoria_nombre: "Smartphones",
+    marca: "Samsung",
+    modelo: "Galaxy S24",
+    precio_base: 899.99,
+    precio_venta: 849.99,
+    stock: 60,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      pantalla: {
+        tamaño: "6.2 pulgadas",
+        tipo: "Dynamic AMOLED 2X",
+        resolucion: "2340 x 1080 px",
+        tasa_refresco: "120Hz adaptativo",
+        brillo_max: "2600 nits"
+      },
+      procesador: {
+        chip: "Snapdragon 8 Gen 3",
+        nucleos: "8 núcleos",
+        velocidad_max: "3.3 GHz"
+      },
+      memoria: {
+        ram: "8GB",
+        almacenamiento: "128GB",
+        expandible: "No"
+      },
+      camara: {
+        principal: "50MP",
+        ultra_angular: "12MP",
+        telefoto: "10MP (3x zoom óptico)",
+        frontal: "12MP",
+        caracteristicas: ["Galaxy AI", "Nightography", "8K video"]
+      },
+      bateria: {
+        capacidad: "4000 mAh",
+        carga_rapida: "25W",
+        carga_inalambrica: "15W",
+        autonomia: "Hasta 22 horas de video"
+      },
+      conectividad: {
+        red: "5G",
+        wifi: "WiFi 6E",
+        bluetooth: "5.3",
+        nfc: true,
+        usb: "USB-C 3.2"
+      },
+      dimensiones: {
+        alto: "147 mm",
+        ancho: "70.6 mm",
+        grosor: "7.6 mm",
+        peso: "167 g"
+      },
+      extras: {
+        resistencia: "IP68",
+        material: "Gorilla Glass Victus 2",
+        s_pen: false
+      }
+    },
+    
+    colores_disponibles: ["Negro Ónix", "Gris Mármol", "Violeta", "Amarillo"],
+    color_actual: "Negro Ónix",
+    
+    imagenes: [
+      "https://example.com/products/galaxys24-black-1.jpg",
+      "https://example.com/products/galaxys24-black-2.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Samsung Ecuador",
+    fecha_ingreso: new Date("2024-09-20"),
+    tags: ["galaxy-ai", "5g", "amoled", "android"],
+    puntuacion_promedio: 4.6,
+    numero_resenas: 189
+  },
+  
+  // ========== LAPTOPS ==========
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d66"),
+    sku: "LAP-MBPRO-M3-16-512-SLV",
+    nombre: "MacBook Pro 14\" M3",
+    descripcion: "Laptop profesional con chip M3 y pantalla Liquid Retina XDR",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d5f"),
+    categoria_nombre: "Laptops",
+    marca: "Apple",
+    modelo: "MacBook Pro 14",
+    precio_base: 2199.99,
+    precio_venta: 2199.99,
+    stock: 25,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      pantalla: {
+        tamaño: "14.2 pulgadas",
+        tipo: "Liquid Retina XDR",
+        resolucion: "3024 x 1964 px",
+        brillo_max: "1600 nits HDR",
+        tasa_refresco: "120Hz ProMotion"
+      },
+      procesador: {
+        chip: "Apple M3",
+        cpu_cores: "8 núcleos (4P + 4E)",
+        gpu_cores: "10 núcleos",
+        neural_engine: "16 núcleos"
+      },
+      memoria: {
+        ram: "16GB",
+        tipo_ram: "Unified Memory",
+        almacenamiento: "512GB",
+        tipo_almacenamiento: "SSD"
+      },
+      bateria: {
+        capacidad: "70Wh",
+        autonomia: "Hasta 17 horas",
+        carga: "96W USB-C"
+      },
+      conectividad: {
+        puertos: ["3x Thunderbolt 4", "HDMI", "SDXC", "MagSafe 3", "Jack 3.5mm"],
+        wifi: "WiFi 6E",
+        bluetooth: "5.3"
+      },
+      dimensiones: {
+        alto: "221.2 mm",
+        ancho: "312.6 mm",
+        grosor: "15.5 mm",
+        peso: "1.55 kg"
+      },
+      extras: {
+        teclado: "Magic Keyboard retroiluminado",
+        trackpad: "Force Touch",
+        camara: "1080p FaceTime HD",
+        audio: "Sistema de 6 altavoces"
+      }
+    },
+    
+    colores_disponibles: ["Gris Espacial", "Plata"],
+    color_actual: "Plata",
+    
+    imagenes: [
+      "https://example.com/products/mbpro14-silver-1.jpg",
+      "https://example.com/products/mbpro14-silver-2.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Apple Inc.",
+    fecha_ingreso: new Date("2024-11-01"),
+    tags: ["m3", "professional", "xdr", "thunderbolt4"],
+    puntuacion_promedio: 4.9,
+    numero_resenas: 156
+  },
+  
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d67"),
+    sku: "LAP-DELL-XPS15-I7-16-512",
+    nombre: "Dell XPS 15",
+    descripcion: "Laptop premium Windows con pantalla OLED 3.5K",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d5f"),
+    categoria_nombre: "Laptops",
+    marca: "Dell",
+    modelo: "XPS 15 9530",
+    precio_base: 1899.99,
+    precio_venta: 1799.99,
+    stock: 18,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      pantalla: {
+        tamaño: "15.6 pulgadas",
+        tipo: "OLED InfinityEdge",
+        resolucion: "3456 x 2160 px",
+        brillo_max: "400 nits",
+        cobertura_color: "100% DCI-P3"
+      },
+      procesador: {
+        chip: "Intel Core i7-13700H",
+        generacion: "13th Gen",
+        nucleos: "14 núcleos (6P + 8E)",
+        velocidad_base: "2.4 GHz",
+        velocidad_turbo: "5.0 GHz"
+      },
+      tarjeta_grafica: {
+        gpu: "NVIDIA GeForce RTX 4050",
+        vram: "6GB GDDR6"
+      },
+      memoria: {
+        ram: "16GB",
+        tipo_ram: "DDR5-4800MHz",
+        almacenamiento: "512GB",
+        tipo_almacenamiento: "NVMe SSD"
+      },
+      bateria: {
+        capacidad: "86Wh",
+        autonomia: "Hasta 10 horas",
+        carga: "130W"
+      },
+      conectividad: {
+        puertos: ["2x Thunderbolt 4", "1x USB-C 3.2", "SD Card Reader", "Jack 3.5mm"],
+        wifi: "WiFi 6E",
+        bluetooth: "5.3"
+      },
+      dimensiones: {
+        alto: "344.7 mm",
+        ancho: "230.1 mm",
+        grosor: "18 mm",
+        peso: "1.86 kg"
+      }
+    },
+    
+    colores_disponibles: ["Platinum Silver"],
+    color_actual: "Platinum Silver",
+    
+    imagenes: [
+      "https://example.com/products/dellxps15-silver-1.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Dell Technologies",
+    fecha_ingreso: new Date("2024-10-10"),
+    tags: ["oled", "rtx4050", "intel13", "premium"],
+    puntuacion_promedio: 4.7,
+    numero_resenas: 98
+  },
+  
+  // ========== TABLETS ==========
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d68"),
+    sku: "TAB-IPADPRO-M2-11-256-GRAY",
+    nombre: "iPad Pro 11\" M2",
+    descripcion: "Tablet profesional con chip M2 y soporte para Apple Pencil",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d60"),
+    categoria_nombre: "Tablets",
+    marca: "Apple",
+    modelo: "iPad Pro 11",
+    precio_base: 999.99,
+    precio_venta: 999.99,
+    stock: 35,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      pantalla: {
+        tamaño: "11 pulgadas",
+        tipo: "Liquid Retina",
+        resolucion: "2388 x 1668 px",
+        tasa_refresco: "120Hz ProMotion",
+        brillo_max: "600 nits"
+      },
+      procesador: {
+        chip: "Apple M2",
+        cpu_cores: "8 núcleos",
+        gpu_cores: "10 núcleos"
+      },
+      memoria: {
+        ram: "8GB",
+        almacenamiento: "256GB"
+      },
+      camaras: {
+        trasera: "12MP Wide + 10MP Ultra Wide",
+        frontal: "12MP Ultra Wide TrueDepth",
+        video: "4K ProRes"
+      },
+      conectividad: {
+        puerto: "USB-C Thunderbolt",
+        wifi: "WiFi 6E",
+        bluetooth: "5.3",
+        celular: "Opcional 5G"
+      },
+      dimensiones: {
+        alto: "247.6 mm",
+        ancho: "178.5 mm",
+        grosor: "5.9 mm",
+        peso: "466 g"
+      },
+      extras: {
+        apple_pencil: "Compatible con Apple Pencil 2",
+        magic_keyboard: "Compatible",
+        face_id: true
+      }
+    },
+    
+    colores_disponibles: ["Gris Espacial", "Plata"],
+    color_actual: "Gris Espacial",
+    
+    imagenes: [
+      "https://example.com/products/ipadpro11-gray-1.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Apple Inc.",
+    fecha_ingreso: new Date("2024-09-15"),
+    tags: ["m2", "pencil", "proMotion", "professional"],
+    puntuacion_promedio: 4.8,
+    numero_resenas: 210
+  },
+  
+  // ========== AURICULARES ==========
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d69"),
+    sku: "AUR-SONY-WH1000XM5-BLK",
+    nombre: "Sony WH-1000XM5",
+    descripcion: "Auriculares premium con cancelación de ruido líder en la industria",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d61"),
+    categoria_nombre: "Auriculares",
+    marca: "Sony",
+    modelo: "WH-1000XM5",
+    precio_base: 399.99,
+    precio_venta: 379.99,
+    stock: 50,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      audio: {
+        drivers: "30mm",
+        respuesta_frecuencia: "4Hz - 40kHz",
+        codecs: ["LDAC", "AAC", "SBC"],
+        audio_alta_resolucion: true
+      },
+      cancelacion_ruido: {
+        tipo: "Activa (ANC)",
+        procesadores: "2x QN1 HD",
+        modos: ["Cancelación máxima", "Ambiente", "Voz"]
+      },
+      bateria: {
+        autonomia: "30 horas con ANC",
+        autonomia_sin_anc: "40 horas",
+        carga_rapida: "3 min = 3 horas",
+        puerto: "USB-C"
+      },
+      conectividad: {
+        bluetooth: "5.2",
+        multipoint: true,
+        cable_incluido: "Jack 3.5mm"
+      },
+      dimensiones: {
+        peso: "250 g"
+      },
+      extras: {
+        controles_tactiles: true,
+        asistente_voz: ["Google Assistant", "Alexa"],
+        speak_to_chat: true,
+        plegable: true,
+        estuche: "Rígido incluido"
+      }
+    },
+    
+    colores_disponibles: ["Negro", "Plata"],
+    color_actual: "Negro",
+    
+    imagenes: [
+      "https://example.com/products/sony-wh1000xm5-black-1.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Sony Corporation",
+    fecha_ingreso: new Date("2024-08-20"),
+    tags: ["anc", "premium", "ldac", "wireless"],
+    puntuacion_promedio: 4.9,
+    numero_resenas: 567
+  },
+  
+  // ========== SMARTWATCHES ==========
+  {
+    _id: ObjectId("673f5b1a2c4e8f1a2b3c4d6a"),
+    sku: "SW-APPLEWATCH-S9-45-ALU-MID",
+    nombre: "Apple Watch Series 9 45mm",
+    descripcion: "Smartwatch con pantalla always-on y sensores de salud avanzados",
+    categoria_id: ObjectId("673f5a1b2c4e8f1a2b3c4d62"),
+    categoria_nombre: "Smartwatches",
+    marca: "Apple",
+    modelo: "Watch Series 9",
+    precio_base: 449.99,
+    precio_venta: 429.99,
+    stock: 40,
+    estado: "ACTIVO",
+    
+    especificaciones: {
+      pantalla: {
+        tamaño: "45mm",
+        tipo: "LTPO OLED",
+        resolucion: "484 x 396 px",
+        brillo_max: "2000 nits",
+        always_on: true
+      },
+      procesador: {
+        chip: "Apple S9 SiP",
+        neural_engine: "4 núcleos"
+      },
+      sensores: {
+        salud: ["Frecuencia cardíaca", "ECG", "Oxígeno en sangre", "Temperatura"],
+        movimiento: ["Acelerómetro", "Giroscopio", "Brújula", "Altímetro"],
+        extras: ["Sensor de luz ambiental", "Detección de caídas", "Detección de choques"]
+      },
+      bateria: {
+        autonomia: "18 horas",
+        carga: "USB-C magnética"
+      },
+      conectividad: {
+        gps: "Dual frecuency GPS",
+        wifi: "WiFi 4",
+        bluetooth: "5.3",
+        nfc: "Apple Pay"
+      },
+      resistencia: {
+        agua: "50 metros (WR50)",
+        polvo: "IP6X"
+      },
+      dimensiones: {
+        caja: "45mm x 38mm x 10.7mm",
+        peso: "38.7 g (aluminio)"
+      }
+    },
+    
+    colores_disponibles: ["Medianoche", "Luz Estelar", "Rojo"],
+    color_actual: "Medianoche",
+    
+    imagenes: [
+      "https://example.com/products/applewatch-s9-midnight-1.jpg"
+    ],
+    
+    garantia_meses: 12,
+    proveedor: "Apple Inc.",
+    fecha_ingreso: new Date("2024-10-05"),
+    tags: ["health", "fitness", "gps", "always-on"],
+    puntuacion_promedio: 4.7,
+    numero_resenas: 423
+  }
+]);
+
+// =====================================================
+// CONSULTAS DE VERIFICACIÓN
+// =====================================================
+
+// Ver todas las categorías
+db.categorias.find().pretty();
+
+// Ver todos los productos
+db.productos.find().pretty();
+
+// Contar productos por categoría
+db.productos.aggregate([
+  {
+    $group: {
+      _id: "$categoria_nombre",
+      total: { $sum: 1 },
+      stock_total: { $sum: "$stock" }
+    }
+  }
+]);
+
+// Buscar productos con precio mayor a $1000
+db.productos.find({ precio_venta: { $gt: 1000 } }).pretty();
+
+// Buscar productos por marca
+db.productos.find({ marca: "Apple" }).pretty();
