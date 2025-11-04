@@ -1,4 +1,4 @@
-# 🏪 Proyecto-Macro-TechStore
+#  Proyecto-Macro-TechStore
 
 Proyecto de **Business Intelligence** para TechStore - Solución integral de análisis de datos que integra sistemas SQL y NoSQL.
 
